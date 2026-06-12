@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHARMABOBO - Tableau de bord</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f0f4f8; }
+    .header {
+      background: #1B5E20;
+      color: white;
+      padding: 16px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 { font-size: 22px; }
+    .header button {
+      background: white;
+      color: #1B5E20;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .container { padding: 30px; max-width: 800px; margin: 0 auto; }
+    .bienvenue {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .bienvenue h2 { color: #1B5E20; margin-bottom: 6px; }
+    .bienvenue p { color: #666; font-size: 14px; }
+    .section-title {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 16px;
+      font-weight: bold;
+    }
+    .form-ajout {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .form-row { display: flex; gap: 12px; align-items: flex-end; }
+    .form-group { flex: 1; }
+    label { display: block; color: #333; margin-bottom: 6px; font-size: 14px; }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
+    input:focus, select:focus { border-color: #1B5E20; }
+    .btn-vert {
+      padding: 12px 24px;
+      background: #1B5E20;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-vert:hover { background: #2E7D32; }
+    .stock-liste {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    .stock-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .stock-item:last-child { border-bottom: none; }
+    .stock-nom { font-weight: bold; color: #333; }
+    .stock-type { color: #888; font-size: 13px; }
+    .badge {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .badge-dispo { background: #E8F5E9; color: #1B5E20; }
+    .badge-rupture { background: #FFEBEE; color: #c62828; }
+    .message { text-align: center; color: #888; padding: 20px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>💊 PHARMABOBO</h1>
+    <button onclick="deconnecter()">Se déconnecter</button>
+  </div>
+
+  <div class="container">
+    <div class="bienvenue">
+      <h2 id="nom-pharmacie">Chargement...</h2>
+      <p>Gérez votre stock de médicaments en temps réel</p>
+    </div>
+
+    <div class="form-ajout">
+      <p class="section-title">Ajouter un médicament au stock</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nom du médicament</label>
+          <input type="text" id="nom-med" placeholder="Ex: Paracetamol" />
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <input type="text" id="type-med" placeholder="Ex: comprimé" />
+        </div>
+        <button class="btn-vert" onclick="ajouterMedicament()">Ajouter</button>
+      </div>
+    </div>
+
+    <div class="stock-liste">
+      <p class="section-title">Mon stock</p>
+      <div id="liste-stock"><p class="message">Chargement du stock...</p></div>
+    </div>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('token');
+    if (!token) window.location.href = '/login.html';
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    document.getElementById('nom-pharmacie').textContent = 'Bienvenue, ' + payload.nom;
+
+    async function chargerStock() {
+      try {
+        const res = await fetch('/pharmacie/stock', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const data = await res.json();
+        const liste = document.getElementById('liste-stock');
+        if (data.length === 0) {
+          liste.innerHTML = '<p class="message">Aucun médicament dans votre stock.</p>';
+          return;
+        }
+        liste.innerHTML = data.map(item => `
+          <div class="stock-item">
+            <div>
+              <div class="stock-nom">${item.nom}</div>
+              <div class="stock-type">${item.type}</div>
+            </div>
+            <span class="badge ${item.disponible ? 'badge-dispo' : 'badge-rupture'}"
+              onclick="toggleStock(${item.stock_id}, ${item.disponible})">
+              ${item.disponible ? '✅ Disponible' : '❌ Rupture'}
+            </span>
+          </div>
+        `).join('');
+      } catch (err) {
+        document.getElementById('liste-stock').innerHTML = '<p class="message">Erreur de chargement.</p>';
+      }
+    }
+
+    async function ajouterMedicament() {
+      const nom = document.getElementById('nom-med').value.trim();
+      const type = document.getElementById('type-med').value.trim();
+      if (!nom) return alert('Veuillez entrer un nom de médicament.');
+      try {
+        const res = await fetch('/pharmacie/stock/ajouter', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({ nom, type })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          document.getElementById('nom-med').value = '';
+          document.getElementById('type-med').value = '';
+          chargerStock();
+        } else {
+          alert(data.erreur || 'Erreur.');
+        }
+      } catch (err) {
+        alert('Erreur de connexion.');
+      }
+    }
+
+    async function toggleStock(stockId, disponible) {
+      try {
+        await fetch('/pharmacie/stock/modifier', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({ stockId, disponible: !disponible })
+        });
+        chargerStock();
+      } catch (err) {
+        alert('Erreur de connexion.');
+      }
+    }
+
+    function deconnecter() {
+      localStorage.removeItem('token');
+      window.location.href = '/login.html';
+    }
+
+    chargerStock();
+  </script>
+</body>
+</html>

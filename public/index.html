@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHARMABOBO</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 600px;
+    }
+    h1 {
+      color: #1B5E20;
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    .tagline {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    input {
+      flex: 1;
+      padding: 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+    input:focus { border-color: #1B5E20; }
+    button {
+      padding: 14px 24px;
+      background: #1B5E20;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover { background: #2E7D32; }
+    .result {
+      background: #E8F5E9;
+      border-left: 4px solid #1B5E20;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .result h3 { color: #1B5E20; margin-bottom: 6px; }
+    .result p { color: #555; font-size: 14px; margin-bottom: 4px; }
+    .disponible { color: #1B5E20; font-weight: bold; }
+    .indisponible { color: #c62828; font-weight: bold; }
+    .message { text-align: center; color: #888; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>💊 PHARMABOBO</h1>
+    <p class="tagline">Trouvez votre médicament avant de vous déplacer</p>
+    <div class="search-box">
+      <input type="text" id="recherche" placeholder="Ex: Quinine, Paracétamol..." />
+      <button onclick="chercher()">Chercher</button>
+    </div>
+    <div id="resultats"></div>
+  </div>
+
+  <script>
+    async function chercher() {
+      const nom = document.getElementById('recherche').value.trim();
+      const resultats = document.getElementById('resultats');
+      if (!nom) {
+        resultats.innerHTML = '<p class="message">Veuillez entrer un médicament.</p>';
+        return;
+      }
+      resultats.innerHTML = '<p class="message">Recherche en cours...</p>';
+      try {
+        const response = await fetch(`/medicaments/${nom}`);
+        const data = await response.json();
+        if (data.length === 0) {
+          resultats.innerHTML = '<p class="message">Aucune pharmacie trouvée pour ce médicament.</p>';
+          return;
+        }
+        resultats.innerHTML = data.map(p => `
+          <div class="result">
+            <h3>🏥 ${p.nom}</h3>
+            <p>📍 ${p.adresse}</p>
+            <p>📞 ${p.telephone}</p>
+            <p class="${p.disponible ? 'disponible' : 'indisponible'}">
+              ${p.disponible ? '✅ Disponible' : '❌ Rupture de stock'}
+            </p>
+          </div>
+        `).join('');
+      } catch (err) {
+        resultats.innerHTML = '<p class="message">Erreur de connexion au serveur.</p>';
+      }
+    }
+
+    document.getElementById('recherche').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') chercher();
+    });
+  </script>
+</body>
+</html>
