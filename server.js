@@ -123,7 +123,6 @@ app.put('/pharmacie/stock/modifier', verifierToken, async (req, res) => {
     res.status(500).json({ erreur: err.message });
   }
 });
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Serveur PHARMABOBO démarré sur le port ${PORT}`);
-  console.log(`Ouvre ton navigateur sur http://localhost:3000`);
 });
