@@ -7,11 +7,8 @@ const PORT = 3000;
 app.use(express.json());
 app.use(express.static('public'));
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'pharmabobo',
-  password: 'Pharmabobo',
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
 
 app.get('/', (req, res) => {
