@@ -123,6 +123,25 @@ app.put('/pharmacie/stock/modifier', verifierToken, async (req, res) => {
     res.status(500).json({ erreur: err.message });
   }
 });
+app.post('/auth/inscription', async (req, res) => {
+  const { nom, adresse, telephone, email, motdepasse } = req.body;
+  try {
+    const existe = await pool.query(
+      'SELECT * FROM pharmacies WHERE email = $1', [email]
+    );
+    if (existe.rows.length > 0) {
+      return res.status(400).json({ erreur: 'Cet email est déjà utilisé.' });
+    }
+    const hash = await bcrypt.hash(motdepasse, 10);
+    await pool.query(
+      'INSERT INTO pharmacies (nom, adresse, telephone, email, mot_de_passe) VALUES ($1, $2, $3, $4, $5)',
+      [nom, adresse, telephone, email, hash]
+    );
+    res.json({ message: 'Inscription réussie !' });
+  } catch (err) {
+    res.status(500).json({ erreur: err.message });
+  }
+});
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Serveur PHARMABOBO démarré sur le port ${PORT}`);
 });
