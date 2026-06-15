@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+console.log('PORT utilisé:', PORT);
 app.use(express.json());
 app.use(express.static('public'));
 const pool = new Pool({
