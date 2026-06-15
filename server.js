@@ -142,6 +142,44 @@ app.post('/auth/inscription', async (req, res) => {
     res.status(500).json({ erreur: err.message });
   }
 });
+app.get('/admin/pharmacies', async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT id, nom, adresse, telephone, email, valide FROM pharmacies ORDER BY valide, id'
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ erreur: err.message });
+  }
+});
+
+app.get('/admin/stats', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT COUNT(*) as medicaments FROM medicaments');
+    res.json({ medicaments: result.rows[0].medicaments });
+  } catch (err) {
+    res.status(500).json({ erreur: err.message });
+  }
+});
+
+app.put('/admin/pharmacies/:id/valider', async (req, res) => {
+  try {
+    await pool.query('UPDATE pharmacies SET valide = true WHERE id = $1', [req.params.id]);
+    res.json({ message: 'Pharmacie validée.' });
+  } catch (err) {
+    res.status(500).json({ erreur: err.message });
+  }
+});
+
+app.delete('/admin/pharmacies/:id', async (req, res) => {
+  try {
+    await pool.query('DELETE FROM stocks WHERE pharmacie_id = $1', [req.params.id]);
+    await pool.query('DELETE FROM pharmacies WHERE id = $1', [req.params.id]);
+    res.json({ message: 'Pharmacie supprimée.' });
+  } catch (err) {
+    res.status(500).json({ erreur: err.message });
+  }
+});
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Serveur PHARMABOBO démarré sur le port ${PORT}`);
 });
