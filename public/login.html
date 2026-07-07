@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PHARMABOBO - Connexion Pharmacie</title>
+  <title>PHARMABOBO - Connexion</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -20,22 +20,43 @@
       border-radius: 16px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       width: 90%;
-      max-width: 400px;
+      max-width: 420px;
     }
-    h1 { color: #1B5E20; text-align: center; font-size: 28px; margin-bottom: 8px; }
-    .tagline { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
-    label { display: block; color: #333; margin-bottom: 6px; font-size: 14px; }
-    input {
+    h1 { color: #1B5E20; text-align: center; font-size: 28px; margin-bottom: 6px; }
+    .tagline { text-align: center; color: #666; margin-bottom: 24px; font-size: 14px; }
+    .btn-public {
       width: 100%;
       padding: 14px;
+      background: #E8F5E9;
+      color: #1B5E20;
+      border: 2px solid #1B5E20;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .btn-public:hover { background: #C8E6C9; }
+    .separateur {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+    .separateur hr { flex: 1; border: none; border-top: 1px solid #e0e0e0; }
+    .separateur span { color: #999; font-size: 13px; white-space: nowrap; }
+    label { display: block; color: #333; margin-bottom: 6px; font-size: 14px; font-weight: bold; }
+    input {
+      width: 100%;
+      padding: 12px;
       border: 2px solid #e0e0e0;
       border-radius: 8px;
-      font-size: 16px;
-      margin-bottom: 20px;
+      font-size: 15px;
+      margin-bottom: 16px;
       outline: none;
     }
     input:focus { border-color: #1B5E20; }
-    button {
+    .btn-connexion {
       width: 100%;
       padding: 14px;
       background: #1B5E20;
@@ -44,23 +65,43 @@
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
+      font-weight: bold;
     }
-    button:hover { background: #2E7D32; }
-    .message { text-align: center; margin-top: 16px; font-size: 14px; }
-    .erreur { color: #c62828; }
-    .succes { color: #1B5E20; }
+    .btn-connexion:hover { background: #2E7D32; }
+    .message { text-align: center; margin-top: 14px; font-size: 14px; padding: 10px; border-radius: 8px; }
+    .erreur { color: #c62828; background: #FFEBEE; }
+    .inscription-link { text-align: center; margin-top: 16px; font-size: 13px; color: #666; }
+    .inscription-link a { color: #1B5E20; text-decoration: none; font-weight: bold; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>💊 PHARMABOBO</h1>
-    <p class="tagline">Espace Pharmacie</p>
+    <p class="tagline">Bienvenue sur PHARMABOBO</p>
+
+    <button class="btn-public" onclick="window.location.href='/'">
+      🔍 Chercher un médicament
+    </button>
+
+    <div class="separateur">
+      <hr/>
+      <span>Espace professionnel</span>
+      <hr/>
+    </div>
+
     <label>Email</label>
     <input type="email" id="email" placeholder="votre@email.com" />
+
     <label>Mot de passe</label>
     <input type="password" id="motdepasse" placeholder="••••••••" />
-    <button onclick="connecter()">Se connecter</button>
-    <div id="message" class="message"></div>
+
+    <button class="btn-connexion" onclick="connecter()">Se connecter</button>
+
+    <div id="message"></div>
+
+    <div class="inscription-link">
+      Nouvelle pharmacie ? <a href="/inscription.html">S'inscrire ici</a>
+    </div>
   </div>
 
   <script>
@@ -75,6 +116,13 @@
         return;
       }
 
+      // Verification admin
+      if (email === 'admin@pharmabobo.com' && motdepasse === 'admin2025') {
+        window.location.href = '/admin.html';
+        return;
+      }
+
+      // Connexion pharmacie
       try {
         const response = await fetch('/auth/login', {
           method: 'POST',
@@ -83,19 +131,21 @@
         });
         const data = await response.json();
         if (response.ok) {
-          message.className = 'message succes';
-          message.textContent = 'Connexion réussie !';
           localStorage.setItem('token', data.token);
-          setTimeout(() => window.location.href = '/dashboard.html', 1000);
+          window.location.href = '/dashboard.html';
         } else {
           message.className = 'message erreur';
-          message.textContent = data.erreur || 'Erreur de connexion.';
+          message.textContent = data.erreur || 'Email ou mot de passe incorrect.';
         }
       } catch (err) {
         message.className = 'message erreur';
         message.textContent = 'Erreur de connexion au serveur.';
       }
     }
+
+    document.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') connecter();
+    });
   </script>
 </body>
 </html>
