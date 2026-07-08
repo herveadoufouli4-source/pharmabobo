@@ -7,112 +7,173 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: Arial, sans-serif; background: #f0f4f8; }
+
+    /* HEADER */
     .header {
       background: #1B5E20;
       color: white;
-      padding: 16px 30px;
+      padding: 16px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .header h1 { font-size: 22px; }
+    .header h1 { font-size: 20px; }
     .header button {
-      background: white;
-      color: #1B5E20;
+      background: rgba(255,255,255,0.2);
+      color: white;
       border: none;
       padding: 8px 16px;
-      border-radius: 8px;
+      border-radius: 20px;
       cursor: pointer;
-      font-weight: bold;
+      font-size: 13px;
     }
-    .container { padding: 30px; max-width: 800px; margin: 0 auto; }
+    .header button:hover { background: rgba(255,255,255,0.3); }
+
+    /* BIENVENUE */
     .bienvenue {
+      background: linear-gradient(135deg, #1B5E20, #2E7D32);
+      color: white;
+      padding: 30px 24px;
+      text-align: center;
+    }
+    .bienvenue h2 { font-size: 22px; margin-bottom: 6px; }
+    .bienvenue p { opacity: 0.9; font-size: 14px; }
+    .bienvenue .date { 
+      margin-top: 10px; 
+      font-size: 13px; 
+      opacity: 0.8;
+      background: rgba(255,255,255,0.1);
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+
+    /* STATS RAPIDES */
+    .stats {
+      display: flex;
+      gap: 16px;
+      padding: 20px 24px;
+      flex-wrap: wrap;
+    }
+    .stat-box {
+      flex: 1;
+      min-width: 120px;
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .stat-box h2 { font-size: 28px; color: #1B5E20; }
+    .stat-box p { color: #888; font-size: 12px; margin-top: 4px; }
+
+    /* CONTAINER */
+    .container { padding: 0 24px 30px; max-width: 800px; margin: 0 auto; }
+
+    /* FORMULAIRE AJOUT */
+    .form-ajout {
       background: white;
       padding: 20px;
       border-radius: 12px;
-      margin-bottom: 24px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
-    .bienvenue h2 { color: #1B5E20; margin-bottom: 6px; }
-    .bienvenue p { color: #666; font-size: 14px; }
-    .section-title {
-      font-size: 18px;
-      color: #333;
-      margin-bottom: 16px;
-      font-weight: bold;
-    }
-    .form-ajout {
-      background: white;
-      padding: 24px;
-      border-radius: 12px;
-      margin-bottom: 24px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-    .form-row { display: flex; gap: 12px; align-items: flex-end; }
-    .form-group { flex: 1; }
-    label { display: block; color: #333; margin-bottom: 6px; font-size: 14px; }
-    input, select {
+    .form-ajout h3 { color: #1B5E20; margin-bottom: 14px; font-size: 16px; }
+    .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .form-group { flex: 1; min-width: 140px; }
+    label { display: block; color: #555; margin-bottom: 5px; font-size: 13px; }
+    input {
       width: 100%;
-      padding: 12px;
+      padding: 10px 12px;
       border: 2px solid #e0e0e0;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 14px;
       outline: none;
     }
-    input:focus, select:focus { border-color: #1B5E20; }
-    .btn-vert {
-      padding: 12px 24px;
+    input:focus { border-color: #1B5E20; }
+    .btn-ajouter {
+      padding: 10px 20px;
       background: #1B5E20;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 14px;
       cursor: pointer;
+      align-self: flex-end;
       white-space: nowrap;
+      margin-top: 18px;
     }
-    .btn-vert:hover { background: #2E7D32; }
+    .btn-ajouter:hover { background: #2E7D32; }
+
+    /* LISTE STOCK */
     .stock-liste {
       background: white;
-      padding: 24px;
+      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
+    .stock-liste h3 { color: #1B5E20; margin-bottom: 14px; font-size: 16px; }
     .stock-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 14px 0;
-      border-bottom: 1px solid #f0f0f0;
+      padding: 12px 0;
+      border-bottom: 1px solid #f5f5f5;
     }
     .stock-item:last-child { border-bottom: none; }
-    .stock-nom { font-weight: bold; color: #333; }
-    .stock-type { color: #888; font-size: 13px; }
+    .stock-nom { font-weight: bold; color: #333; font-size: 14px; }
+    .stock-type { color: #999; font-size: 12px; margin-top: 2px; }
     .badge {
       padding: 6px 14px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: bold;
       cursor: pointer;
+      border: none;
     }
     .badge-dispo { background: #E8F5E9; color: #1B5E20; }
     .badge-rupture { background: #FFEBEE; color: #c62828; }
-    .message { text-align: center; color: #888; padding: 20px; }
+    .message { text-align: center; color: #aaa; padding: 30px; font-size: 14px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      .stats { gap: 10px; padding: 16px; }
+      .form-row { flex-direction: column; }
+      .btn-ajouter { width: 100%; margin-top: 10px; }
+    }
   </style>
 </head>
 <body>
+
   <div class="header">
     <h1>💊 PHARMABOBO</h1>
     <button onclick="deconnecter()">Se déconnecter</button>
   </div>
 
-  <div class="container">
-    <div class="bienvenue">
-      <h2 id="nom-pharmacie">Chargement...</h2>
-      <p>Gérez votre stock de médicaments en temps réel</p>
-    </div>
+  <div class="bienvenue">
+    <h2 id="nom-pharmacie">Chargement...</h2>
+    <p>Gérez votre stock de médicaments en temps réel</p>
+    <div class="date" id="date-actuelle"></div>
+  </div>
 
+  <div class="stats">
+    <div class="stat-box">
+      <h2 id="nb-dispo">0</h2>
+      <p>Disponibles</p>
+    </div>
+    <div class="stat-box">
+      <h2 id="nb-rupture">0</h2>
+      <p>En rupture</p>
+    </div>
+    <div class="stat-box">
+      <h2 id="nb-total">0</h2>
+      <p>Total stock</p>
+    </div>
+  </div>
+
+  <div class="container">
     <div class="form-ajout">
-      <p class="section-title">Ajouter un médicament au stock</p>
+      <h3>➕ Ajouter un médicament</h3>
       <div class="form-row">
         <div class="form-group">
           <label>Nom du médicament</label>
@@ -120,101 +181,6 @@
         </div>
         <div class="form-group">
           <label>Type</label>
-          <input type="text" id="type-med" placeholder="Ex: comprimé" />
+          <input type="text" id="type-med" placeholder="Ex: comprime" />
         </div>
-        <button class="btn-vert" onclick="ajouterMedicament()">Ajouter</button>
-      </div>
-    </div>
-
-    <div class="stock-liste">
-      <p class="section-title">Mon stock</p>
-      <div id="liste-stock"><p class="message">Chargement du stock...</p></div>
-    </div>
-  </div>
-
-  <script>
-    const token = localStorage.getItem('token');
-    if (!token) window.location.href = '/login.html';
-
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    document.getElementById('nom-pharmacie').textContent = 'Bienvenue, ' + payload.nom;
-
-    async function chargerStock() {
-      try {
-        const res = await fetch('/pharmacie/stock', {
-          headers: { 'Authorization': 'Bearer ' + token }
-        });
-        const data = await res.json();
-        const liste = document.getElementById('liste-stock');
-        if (data.length === 0) {
-          liste.innerHTML = '<p class="message">Aucun médicament dans votre stock.</p>';
-          return;
-        }
-        liste.innerHTML = data.map(item => `
-          <div class="stock-item">
-            <div>
-              <div class="stock-nom">${item.nom}</div>
-              <div class="stock-type">${item.type}</div>
-            </div>
-            <span class="badge ${item.disponible ? 'badge-dispo' : 'badge-rupture'}"
-              onclick="toggleStock(${item.stock_id}, ${item.disponible})">
-              ${item.disponible ? '✅ Disponible' : '❌ Rupture'}
-            </span>
-          </div>
-        `).join('');
-      } catch (err) {
-        document.getElementById('liste-stock').innerHTML = '<p class="message">Erreur de chargement.</p>';
-      }
-    }
-
-    async function ajouterMedicament() {
-      const nom = document.getElementById('nom-med').value.trim();
-      const type = document.getElementById('type-med').value.trim();
-      if (!nom) return alert('Veuillez entrer un nom de médicament.');
-      try {
-        const res = await fetch('/pharmacie/stock/ajouter', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          },
-          body: JSON.stringify({ nom, type })
-        });
-        const data = await res.json();
-        if (res.ok) {
-          document.getElementById('nom-med').value = '';
-          document.getElementById('type-med').value = '';
-          chargerStock();
-        } else {
-          alert(data.erreur || 'Erreur.');
-        }
-      } catch (err) {
-        alert('Erreur de connexion.');
-      }
-    }
-
-    async function toggleStock(stockId, disponible) {
-      try {
-        await fetch('/pharmacie/stock/modifier', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-          },
-          body: JSON.stringify({ stockId, disponible: !disponible })
-        });
-        chargerStock();
-      } catch (err) {
-        alert('Erreur de connexion.');
-      }
-    }
-
-    function deconnecter() {
-      localStorage.removeItem('token');
-      window.location.href = '/login.html';
-    }
-
-    chargerStock();
-  </script>
-</body>
-</html>
+        <button class="btn-ajouter" onclick="ajouterMedicament()">Ajouter</b
