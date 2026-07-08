@@ -7,144 +7,39 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: Arial, sans-serif; background: #f0f4f8; }
-
-    /* HEADER */
-    .header {
-      background: #1B5E20;
-      color: white;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .header { background: #1B5E20; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
     .header h1 { font-size: 20px; }
-    .header button {
-      background: rgba(255,255,255,0.2);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 13px;
-    }
-    .header button:hover { background: rgba(255,255,255,0.3); }
-
-    /* BIENVENUE */
-    .bienvenue {
-      background: linear-gradient(135deg, #1B5E20, #2E7D32);
-      color: white;
-      padding: 30px 24px;
-      text-align: center;
-    }
+    .header button { background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; }
+    .bienvenue { background: linear-gradient(135deg, #1B5E20, #2E7D32); color: white; padding: 30px 24px; text-align: center; }
     .bienvenue h2 { font-size: 22px; margin-bottom: 6px; }
     .bienvenue p { opacity: 0.9; font-size: 14px; }
-    .bienvenue .date { 
-      margin-top: 10px; 
-      font-size: 13px; 
-      opacity: 0.8;
-      background: rgba(255,255,255,0.1);
-      display: inline-block;
-      padding: 4px 14px;
-      border-radius: 20px;
-    }
-
-    /* STATS RAPIDES */
-    .stats {
-      display: flex;
-      gap: 16px;
-      padding: 20px 24px;
-      flex-wrap: wrap;
-    }
-    .stat-box {
-      flex: 1;
-      min-width: 120px;
-      background: white;
-      padding: 16px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
+    .bienvenue .date { margin-top: 10px; font-size: 13px; opacity: 0.8; background: rgba(255,255,255,0.1); display: inline-block; padding: 4px 14px; border-radius: 20px; }
+    .stats { display: flex; gap: 16px; padding: 20px 24px; flex-wrap: wrap; }
+    .stat-box { flex: 1; min-width: 120px; background: white; padding: 16px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
     .stat-box h2 { font-size: 28px; color: #1B5E20; }
     .stat-box p { color: #888; font-size: 12px; margin-top: 4px; }
-
-    /* CONTAINER */
     .container { padding: 0 24px 30px; max-width: 800px; margin: 0 auto; }
-
-    /* FORMULAIRE AJOUT */
-    .form-ajout {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
+    .form-ajout { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
     .form-ajout h3 { color: #1B5E20; margin-bottom: 14px; font-size: 16px; }
     .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
     .form-group { flex: 1; min-width: 140px; }
     label { display: block; color: #555; margin-bottom: 5px; font-size: 13px; }
-    input {
-      width: 100%;
-      padding: 10px 12px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 14px;
-      outline: none;
-    }
+    input { width: 100%; padding: 10px 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; outline: none; }
     input:focus { border-color: #1B5E20; }
-    .btn-ajouter {
-      padding: 10px 20px;
-      background: #1B5E20;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      cursor: pointer;
-      align-self: flex-end;
-      white-space: nowrap;
-      margin-top: 18px;
-    }
-    .btn-ajouter:hover { background: #2E7D32; }
-
-    /* LISTE STOCK */
-    .stock-liste {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
+    .btn-ajouter { padding: 10px 20px; background: #1B5E20; color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; margin-top: 18px; white-space: nowrap; }
+    .stock-liste { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
     .stock-liste h3 { color: #1B5E20; margin-bottom: 14px; font-size: 16px; }
-    .stock-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid #f5f5f5;
-    }
+    .stock-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
     .stock-item:last-child { border-bottom: none; }
     .stock-nom { font-weight: bold; color: #333; font-size: 14px; }
     .stock-type { color: #999; font-size: 12px; margin-top: 2px; }
-    .badge {
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
-    }
+    .badge { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; border: none; }
     .badge-dispo { background: #E8F5E9; color: #1B5E20; }
     .badge-rupture { background: #FFEBEE; color: #c62828; }
     .message { text-align: center; color: #aaa; padding: 30px; font-size: 14px; }
-
-    /* RESPONSIVE */
-    @media (max-width: 480px) {
-      .stats { gap: 10px; padding: 16px; }
-      .form-row { flex-direction: column; }
-      .btn-ajouter { width: 100%; margin-top: 10px; }
-    }
   </style>
 </head>
 <body>
-
   <div class="header">
     <h1>💊 PHARMABOBO</h1>
     <button onclick="deconnecter()">Se déconnecter</button>
@@ -157,18 +52,9 @@
   </div>
 
   <div class="stats">
-    <div class="stat-box">
-      <h2 id="nb-dispo">0</h2>
-      <p>Disponibles</p>
-    </div>
-    <div class="stat-box">
-      <h2 id="nb-rupture">0</h2>
-      <p>En rupture</p>
-    </div>
-    <div class="stat-box">
-      <h2 id="nb-total">0</h2>
-      <p>Total stock</p>
-    </div>
+    <div class="stat-box"><h2 id="nb-dispo">0</h2><p>Disponibles</p></div>
+    <div class="stat-box"><h2 id="nb-rupture">0</h2><p>En rupture</p></div>
+    <div class="stat-box"><h2 id="nb-total">0</h2><p>Total stock</p></div>
   </div>
 
   <div class="container">
@@ -183,4 +69,78 @@
           <label>Type</label>
           <input type="text" id="type-med" placeholder="Ex: comprime" />
         </div>
-        <button class="btn-ajouter" onclick="ajouterMedicament()">Ajouter</b
+        <button class="btn-ajouter" onclick="ajouterMedicament()">Ajouter</button>
+      </div>
+    </div>
+
+    <div class="stock-liste">
+      <h3>📦 Mon stock</h3>
+      <div id="liste-stock"><p class="message">Chargement du stock...</p></div>
+    </div>
+  </div>
+
+  <script>
+    var token = localStorage.getItem('token');
+    if (!token) window.location.href = '/login.html';
+
+    var now = new Date();
+    document.getElementById('date-actuelle').textContent = now.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    try {
+      var payload = JSON.parse(atob(token.split('.')[1]));
+      document.getElementById('nom-pharmacie').textContent = 'Bienvenue, ' + payload.nom + ' !';
+    } catch(e) {}
+
+    function chargerStock() {
+      fetch('/pharmacie/stock', { headers: { 'Authorization': 'Bearer ' + token } })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          var liste = document.getElementById('liste-stock');
+          document.getElementById('nb-total').textContent = data.length;
+          document.getElementById('nb-dispo').textContent = data.filter(function(d) { return d.disponible; }).length;
+          document.getElementById('nb-rupture').textContent = data.filter(function(d) { return !d.disponible; }).length;
+          if (data.length === 0) {
+            liste.innerHTML = '<p class="message">Aucun médicament dans votre stock.</p>';
+            return;
+          }
+          liste.innerHTML = data.map(function(item) {
+            return '<div class="stock-item"><div><div class="stock-nom">' + item.nom + '</div><div class="stock-type">' + (item.type || 'Non précisé') + '</div></div><button class="badge ' + (item.disponible ? 'badge-dispo' : 'badge-rupture') + '" onclick="toggleStock(' + item.stock_id + ',' + item.disponible + ')">' + (item.disponible ? '✅ Disponible' : '❌ Rupture') + '</button></div>';
+          }).join('');
+        });
+    }
+
+    function ajouterMedicament() {
+      var nom = document.getElementById('nom-med').value.trim();
+      var type = document.getElementById('type-med').value.trim();
+      if (!nom) { alert('Veuillez entrer un nom.'); return; }
+      fetch('/pharmacie/stock/ajouter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ nom: nom, type: type })
+      }).then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data.message) {
+            document.getElementById('nom-med').value = '';
+            document.getElementById('type-med').value = '';
+            chargerStock();
+          } else { alert(data.erreur || 'Erreur.'); }
+        });
+    }
+
+    function toggleStock(stockId, disponible) {
+      fetch('/pharmacie/stock/modifier', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ stockId: stockId, disponible: !disponible })
+      }).then(function() { chargerStock(); });
+    }
+
+    function deconnecter() {
+      localStorage.removeItem('token');
+      window.location.href = '/login.html';
+    }
+
+    chargerStock();
+  </script>
+</body>
+</html>
