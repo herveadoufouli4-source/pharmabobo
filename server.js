@@ -180,6 +180,14 @@ app.delete('/admin/pharmacies/:id', async (req, res) => {
     res.status(500).json({ erreur: err.message });
   }
 });
+app.get('/admin/medicaments', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM medicaments ORDER BY nom');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ erreur: err.message });
+  }
+});
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Serveur PHARMABOBO démarré sur le port ${PORT}`);
 });

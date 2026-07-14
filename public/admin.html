@@ -7,64 +7,136 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: Arial, sans-serif; background: #f0f4f8; }
-    .header { background: #1B5E20; color: white; padding: 16px 30px; display: flex; justify-content: space-between; align-items: center; }
-    .header h1 { font-size: 22px; }
-    .header button { background: white; color: #1B5E20; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-    .container { padding: 30px; max-width: 900px; margin: 0 auto; }
-    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 30px; }
-    .stat-box { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
-    .stat-box h2 { font-size: 36px; color: #1B5E20; }
-    .stat-box p { color: #666; font-size: 14px; margin-top: 4px; }
-    .section { background: white; padding: 24px; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
-    .section h2 { color: #1B5E20; margin-bottom: 16px; font-size: 18px; }
-    .pharmacie-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #f0f0f0; }
-    .pharmacie-item:last-child { border-bottom: none; }
-    .pharmacie-info h3 { color: #333; font-size: 15px; }
-    .pharmacie-info p { color: #888; font-size: 13px; margin-top: 2px; }
-    .btn-valider { padding: 8px 16px; background: #1B5E20; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; }
-    .btn-rejeter { padding: 8px 16px; background: #c62828; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; margin-left: 8px; }
-    .badge-valide { color: #1B5E20; font-weight: bold; font-size: 13px; }
-    .message { text-align: center; color: #888; padding: 20px; }
-    .login-form { max-width: 400px; margin: 100px auto; background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-    .login-form h2 { color: #1B5E20; text-align: center; margin-bottom: 20px; }
+
+    /* LOGIN */
+    .login-page { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .login-form { background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 90%; max-width: 380px; text-align: center; }
+    .login-form h2 { color: #1B5E20; margin-bottom: 6px; font-size: 22px; }
+    .login-form p { color: #888; font-size: 13px; margin-bottom: 24px; }
     .login-form input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 15px; margin-bottom: 16px; outline: none; }
-    .login-form button { width: 100%; padding: 14px; background: #1B5E20; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+    .login-form input:focus { border-color: #1B5E20; }
+    .login-form button { width: 100%; padding: 14px; background: #1B5E20; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-weight: bold; }
+
+    /* HEADER */
+    .header { background: #1B5E20; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 20px; }
+    .header button { background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; }
+
+    /* BIENVENUE ADMIN */
+    .admin-hero { background: linear-gradient(135deg, #1B5E20, #2E7D32); color: white; padding: 24px; text-align: center; }
+    .admin-hero h2 { font-size: 20px; margin-bottom: 4px; }
+    .admin-hero p { opacity: 0.85; font-size: 13px; }
+
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 20px 24px; }
+    .stat-box { background: white; padding: 16px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .stat-box h2 { font-size: 30px; color: #1B5E20; }
+    .stat-box p { color: #888; font-size: 12px; margin-top: 4px; }
+    .stat-box.orange h2 { color: #F57F17; }
+    .stat-box.rouge h2 { color: #c62828; }
+
+    /* CONTAINER */
+    .container { padding: 0 24px 30px; max-width: 900px; margin: 0 auto; }
+    .section { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .section h3 { color: #1B5E20; margin-bottom: 16px; font-size: 16px; padding-bottom: 10px; border-bottom: 2px solid #E8F5E9; }
+
+    /* PHARMACIE ITEM */
+    .pharmacie-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f5f5f5; }
+    .pharmacie-item:last-child { border-bottom: none; }
+    .pharmacie-info h4 { color: #333; font-size: 14px; margin-bottom: 3px; }
+    .pharmacie-info p { color: #999; font-size: 12px; }
+    .btn-valider { padding: 6px 14px; background: #E8F5E9; color: #1B5E20; border: 1px solid #1B5E20; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; }
+    .btn-rejeter { padding: 6px 14px; background: #FFEBEE; color: #c62828; border: 1px solid #c62828; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; margin-left: 8px; }
+    .badge-active { color: #1B5E20; font-size: 12px; font-weight: bold; background: #E8F5E9; padding: 4px 12px; border-radius: 20px; }
+    .message { text-align: center; color: #bbb; padding: 20px; font-size: 14px; }
+
+    /* MEDICAMENTS */
+    .med-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+    .med-item { background: #f9f9f9; padding: 12px; border-radius: 8px; text-align: center; }
+    .med-item h4 { color: #333; font-size: 13px; }
+    .med-item p { color: #999; font-size: 11px; margin-top: 3px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .pharmacie-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
   </style>
 </head>
 <body>
-  <div id="login-section">
+
+  <!-- LOGIN -->
+  <div id="login-section" class="login-page">
     <div class="login-form">
-      <h2>🔐 Admin PHARMABOBO</h2>
+      <h2>🛡️ Administration</h2>
+      <p>Accès réservé à l'administrateur PHARMABOBO</p>
       <input type="password" id="admin-password" placeholder="Mot de passe admin" />
-      <button onclick="loginAdmin()">Acceder</button>
-      <div id="login-error" style="color:red;text-align:center;margin-top:10px;"></div>
+      <button onclick="loginAdmin()">Accéder au panel</button>
+      <div id="login-error" style="color:#c62828;margin-top:12px;font-size:13px;"></div>
     </div>
   </div>
 
+  <!-- DASHBOARD ADMIN -->
   <div id="admin-section" style="display:none;">
     <div class="header">
-      <h1>PHARMABOBO - Administration</h1>
-      <button onclick="deconnecterAdmin()">Deconnexion</button>
+      <h1>🛡️ PHARMABOBO — Admin</h1>
+      <button onclick="deconnecterAdmin()">Déconnexion</button>
     </div>
-    <div class="container">
-      <div class="stats">
-        <div class="stat-box"><h2 id="total-pharmacies">0</h2><p>Pharmacies inscrites</p></div>
-        <div class="stat-box"><h2 id="total-validees">0</h2><p>Pharmacies validees</p></div>
-        <div class="stat-box"><h2 id="total-medicaments">0</h2><p>Medicaments en base</p></div>
+
+    <div class="admin-hero">
+      <h2>Tableau de bord Administrateur</h2>
+      <p id="date-admin"></p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-box">
+        <h2 id="total-pharmacies">0</h2>
+        <p>Total pharmacies</p>
       </div>
+      <div class="stat-box">
+        <h2 id="total-validees">0</h2>
+        <p>Validées</p>
+      </div>
+      <div class="stat-box orange">
+        <h2 id="total-attente">0</h2>
+        <p>En attente</p>
+      </div>
+      <div class="stat-box">
+        <h2 id="total-medicaments">0</h2>
+        <p>Médicaments</p>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- PHARMACIES EN ATTENTE -->
       <div class="section">
-        <h2>En attente de validation</h2>
+        <h3>⏳ Pharmacies en attente de validation</h3>
         <div id="liste-attente"><p class="message">Chargement...</p></div>
       </div>
+
+      <!-- PHARMACIES VALIDÉES -->
       <div class="section">
-        <h2>Pharmacies validees</h2>
+        <h3>✅ Pharmacies validées</h3>
         <div id="liste-validees"><p class="message">Chargement...</p></div>
       </div>
+
+      <!-- MÉDICAMENTS -->
+      <div class="section">
+        <h3>💊 Médicaments référencés</h3>
+        <div id="liste-medicaments"><p class="message">Chargement...</p></div>
+      </div>
+
     </div>
   </div>
 
   <script>
     var ADMIN_PASSWORD = 'admin2025';
+
+    // Date
+    var now = new Date();
+    var dateStr = now.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('date-admin').textContent = dateStr;
 
     function loginAdmin() {
       var pwd = document.getElementById('admin-password').value;
@@ -77,8 +149,12 @@
       }
     }
 
+    document.getElementById('admin-password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') loginAdmin();
+    });
+
     function deconnecterAdmin() {
-      document.getElementById('login-section').style.display = 'block';
+      document.getElementById('login-section').style.display = 'flex';
       document.getElementById('admin-section').style.display = 'none';
       document.getElementById('admin-password').value = '';
     }
@@ -89,32 +165,51 @@
         .then(function(data) {
           var attente = data.filter(function(p) { return !p.valide; });
           var validees = data.filter(function(p) { return p.valide; });
+
           document.getElementById('total-pharmacies').textContent = data.length;
           document.getElementById('total-validees').textContent = validees.length;
+          document.getElementById('total-attente').textContent = attente.length;
 
+          // Attente
           var listeAttente = document.getElementById('liste-attente');
           if (attente.length === 0) {
-            listeAttente.innerHTML = '<p class="message">Aucune pharmacie en attente.</p>';
+            listeAttente.innerHTML = '<p class="message">✅ Aucune pharmacie en attente.</p>';
           } else {
             listeAttente.innerHTML = attente.map(function(p) {
-              return '<div class="pharmacie-item"><div class="pharmacie-info"><h3>' + p.nom + '</h3><p>' + p.adresse + ' | ' + p.telephone + '</p></div><div><button class="btn-valider" onclick="valider(' + p.id + ')">Valider</button><button class="btn-rejeter" onclick="rejeter(' + p.id + ')">Rejeter</button></div></div>';
+              return '<div class="pharmacie-item"><div class="pharmacie-info"><h4>🏥 ' + p.nom + '</h4><p>📍 ' + p.adresse + ' | 📞 ' + p.telephone + ' | ✉️ ' + p.email + '</p></div><div><button class="btn-valider" onclick="valider(' + p.id + ')">✅ Valider</button><button class="btn-rejeter" onclick="rejeter(' + p.id + ')">❌ Rejeter</button></div></div>';
             }).join('');
           }
 
+          // Validées
           var listeValidees = document.getElementById('liste-validees');
           if (validees.length === 0) {
-            listeValidees.innerHTML = '<p class="message">Aucune pharmacie validee.</p>';
+            listeValidees.innerHTML = '<p class="message">Aucune pharmacie validée.</p>';
           } else {
             listeValidees.innerHTML = validees.map(function(p) {
-              return '<div class="pharmacie-item"><div class="pharmacie-info"><h3>' + p.nom + '</h3><p>' + p.adresse + '</p></div><span class="badge-valide">Active</span></div>';
+              return '<div class="pharmacie-item"><div class="pharmacie-info"><h4>🏥 ' + p.nom + '</h4><p>📍 ' + p.adresse + ' | 📞 ' + p.telephone + '</p></div><span class="badge-active">✅ Active</span></div>';
             }).join('');
           }
         });
 
+      // Stats médicaments
       fetch('/admin/stats')
         .then(function(res) { return res.json(); })
         .then(function(stats) {
           document.getElementById('total-medicaments').textContent = stats.medicaments;
+        });
+
+      // Liste médicaments
+      fetch('/admin/medicaments')
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          var listeMed = document.getElementById('liste-medicaments');
+          if (data.length === 0) {
+            listeMed.innerHTML = '<p class="message">Aucun médicament.</p>';
+          } else {
+            listeMed.innerHTML = '<div class="med-grid">' + data.map(function(m) {
+              return '<div class="med-item"><h4>' + m.nom + '</h4><p>' + (m.type || 'Non précisé') + '</p></div>';
+            }).join('') + '</div>';
+          }
         });
     }
 
@@ -124,7 +219,7 @@
     }
 
     function rejeter(id) {
-      if (confirm('Voulez-vous supprimer cette pharmacie ?')) {
+      if (confirm('Supprimer cette pharmacie ?')) {
         fetch('/admin/pharmacies/' + id, { method: 'DELETE' })
           .then(function() { chargerDonnees(); });
       }
